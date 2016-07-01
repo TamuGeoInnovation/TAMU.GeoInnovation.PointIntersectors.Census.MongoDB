@@ -34,6 +34,10 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
             : base(version, blockFilesQueryManager, stateFilesQueryManager, countryFilesQueryManager)
         { }
 
+        public MongoDBCensus2010PointIntersector(Version version, IQueryManager blockFilesQueryManager, IQueryManager stateFilesQueryManager, IQueryManager countryFilesQueryManager)
+            : base(version, blockFilesQueryManager, stateFilesQueryManager, countryFilesQueryManager)
+        { }
+
 
         public override string GetStateFips(double longitude, double latitude)
         {
