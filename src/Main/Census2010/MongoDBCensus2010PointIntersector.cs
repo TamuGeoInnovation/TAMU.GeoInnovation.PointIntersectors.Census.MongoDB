@@ -1,17 +1,13 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
+using MongoDB.Driver.GeoJsonObjectModel;
+using System;
 using System.Data;
-using System.Data.SqlClient;
+using TAMU.GeoInnovation.Common.Utils.Databases.MongoDB;
 using TAMU.GeoInnovation.PointIntersectors.Census.Census2010;
 using USC.GISResearchLab.AddressProcessing.Core.Standardizing.StandardizedAddresses.Lines.LastLines;
 using USC.GISResearchLab.Common.Databases.QueryManagers;
-using USC.GISResearchLab.Common.Utils.Databases;
-using TAMU.GeoInnovation.Common.Utils.Databases.MongoDB;
-using USC.GISResearchLab.Common.Databases.SchemaManagers;
-using MongoDB.Driver;
-using MongoDB.Bson;
-using MongoDB.Driver.Builders;
-using System.Collections.Generic;
-using MongoDB.Driver.GeoJsonObjectModel;
 
 namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 {
