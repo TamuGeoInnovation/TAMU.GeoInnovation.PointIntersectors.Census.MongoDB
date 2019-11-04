@@ -197,7 +197,7 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
                     //sql += " WITH (INDEX (idx_geog))";
                     //sql += " WHERE ";
 
-                    
+
                     //sql += "  Geography::Point(@latitude, @longitude, 4269).STIntersects(shapeGeog) = 1";
 
                     //SqlCommand cmd = new SqlCommand(sql);
@@ -239,7 +239,7 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 
                             if (mongoServer != null)
                             {
-                                string tableName =  state + "_Place10" ;
+                                string tableName = state + "_Place10";
                                 MongoDatabase database = mongoServer.GetDatabase(StateFilesQueryManager.DefaultDatabase);
                                 MongoCollection mongoCollection = database.GetCollection<BsonDocument>(tableName);
 
@@ -588,7 +588,7 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
                         //GeoJson2DCoordinates geoJson2DCoordinates = new GeoJson2DCoordinates(longitude, latitude);
                         //GeoJsonPoint<GeoJson2DCoordinates> point = GeoJson.Point(null, geoJson2DCoordinates);
 
-                        MongoCursor<BsonDocument> docs = mongoCollection.FindAs<BsonDocument>(Query.And(Query.EQ("state", stateFips),Query.EQ("place",placeFips)));
+                        MongoCursor<BsonDocument> docs = mongoCollection.FindAs<BsonDocument>(Query.And(Query.EQ("state", stateFips), Query.EQ("place", placeFips)));
 
                         foreach (BsonDocument doc in docs)
                         {
@@ -697,10 +697,10 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 
                             if (mongoServer != null)
                             {
-                                string tableName =  state + "_tract10";
+                                string tableName = state + "_tract10";
                                 MongoDatabase database = mongoServer.GetDatabase(StateFilesQueryManager.DefaultDatabase);
                                 MongoCollection mongoCollection = database.GetCollection<BsonDocument>(tableName);
-                                
+
                                 GeoJson2DCoordinates geoJson2DCoordinates = new GeoJson2DCoordinates(longitude, latitude);
                                 GeoJsonPoint<GeoJson2DCoordinates> point = GeoJson.Point(null, geoJson2DCoordinates);
 
@@ -772,47 +772,47 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
                                 GeoJsonPoint<GeoJson2DCoordinates> point = GeoJson.Point(null, geoJson2DCoordinates);
 
                                 MongoCursor<BsonDocument> docs = mongoCollection.FindAs<BsonDocument>(Query.GeoIntersects("shapeGeogAsGeoJSON", point));
-                                ret= new DataTable();
-                                if(docs != null && docs.Count()>0)
+                                ret = new DataTable();
+                                if (docs != null && docs.Count() > 0)
                                 {
-                                     ret.Columns.Add("stateFp10",typeof(string));
-                                     ret.Columns.Add("countyFp10",typeof(string));
-                                     ret.Columns.Add("ctidFp10",typeof(string));
+                                    ret.Columns.Add("stateFp10", typeof(string));
+                                    ret.Columns.Add("countyFp10", typeof(string));
+                                    ret.Columns.Add("ctidFp10", typeof(string));
                                 }
-                                
+
                                 foreach (BsonDocument doc in docs)
                                 {
                                     ret.Rows.Add(doc["STATEFP10"].AsString, doc["COUNTYFP10"].AsString, doc["CTIDFP10"].AsString);
-                               }
+                                }
                             }
                         }
-                    //{
-                    //    string sql = "";
-                    //    sql += " SELECT ";
-                    //    sql += " stateFp10, ";
-                    //    sql += " countyFp10, ";
-                    //    sql += " ctidFp10 ";
-                    //    sql += " FROM ";
-                    //    sql += "[" + state + "_tract10 ]";
-                    //    sql += " WITH (INDEX (idx_geog))";
-                    //    sql += " WHERE ";
+                        //{
+                        //    string sql = "";
+                        //    sql += " SELECT ";
+                        //    sql += " stateFp10, ";
+                        //    sql += " countyFp10, ";
+                        //    sql += " ctidFp10 ";
+                        //    sql += " FROM ";
+                        //    sql += "[" + state + "_tract10 ]";
+                        //    sql += " WITH (INDEX (idx_geog))";
+                        //    sql += " WHERE ";
 
-                    //    // first implementation
-                    //    //sql += "  shapeGeog.STIntersects(Geography::STPointFromText('POINT(" + longitude + " " + latitude + ")', 4269)) = 1";
+                        //    // first implementation
+                        //    //sql += "  shapeGeog.STIntersects(Geography::STPointFromText('POINT(" + longitude + " " + latitude + ")', 4269)) = 1";
 
-                    //    // second implementation - attempt to speed it up by checking intersect on the point not the database row
-                    //    //sql += "  Geography::STPointFromText('POINT(" + longitude + " " + latitude + ")', 4269).STIntersects(shapeGeog) = 1";
+                        //    // second implementation - attempt to speed it up by checking intersect on the point not the database row
+                        //    //sql += "  Geography::STPointFromText('POINT(" + longitude + " " + latitude + ")', 4269).STIntersects(shapeGeog) = 1";
 
-                    //    // third implementation - attempt to speed it up using the geography as native point instead, also included the index in the query
-                    //    sql += "  Geography::Point(@latitude, @longitude, 4269).STIntersects(shapeGeog) = 1";
+                        //    // third implementation - attempt to speed it up using the geography as native point instead, also included the index in the query
+                        //    sql += "  Geography::Point(@latitude, @longitude, 4269).STIntersects(shapeGeog) = 1";
 
-                    //    SqlCommand cmd = new SqlCommand(sql);
-                    //    cmd.Parameters.Add(SqlParameterUtils.BuildSqlParameter("latitude", SqlDbType.Decimal, latitude));
-                    //    cmd.Parameters.Add(SqlParameterUtils.BuildSqlParameter("longitude", SqlDbType.Decimal, longitude));
+                        //    SqlCommand cmd = new SqlCommand(sql);
+                        //    cmd.Parameters.Add(SqlParameterUtils.BuildSqlParameter("latitude", SqlDbType.Decimal, latitude));
+                        //    cmd.Parameters.Add(SqlParameterUtils.BuildSqlParameter("longitude", SqlDbType.Decimal, longitude));
 
-                    //    IQueryManager qm = StateFilesQueryManager;
-                    //    qm.AddParameters(cmd.Parameters);
-                    //    ret = qm.ExecuteDataTable(CommandType.Text, cmd.CommandText, true);
+                        //    IQueryManager qm = StateFilesQueryManager;
+                        //    qm.AddParameters(cmd.Parameters);
+                        //    ret = qm.ExecuteDataTable(CommandType.Text, cmd.CommandText, true);
                     }
                 }
             }
@@ -845,7 +845,7 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 
                             if (mongoServer != null)
                             {
-                                string tableName =  state + "_bg10 ";
+                                string tableName = state + "_bg10 ";
                                 MongoDatabase database = mongoServer.GetDatabase(StateFilesQueryManager.DefaultDatabase);
                                 MongoCollection mongoCollection = database.GetCollection<BsonDocument>(tableName);
 
@@ -931,7 +931,7 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 
                                 foreach (BsonDocument doc in docs)
                                 {
-                                    ret.Rows.Add(doc["STATEFP10"].AsString, doc["COUNTYFP10"].AsString,doc["CTIDFP10"].AsString, doc["GEOID10"].AsString);
+                                    ret.Rows.Add(doc["STATEFP10"].AsString, doc["COUNTYFP10"].AsString, doc["CTIDFP10"].AsString, doc["GEOID10"].AsString);
                                 }
                             }
                         }
@@ -997,7 +997,7 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 
                             if (mongoServer != null)
                             {
-                                string tableName =  state + "_tabblock10";
+                                string tableName = state + "_tabblock10";
                                 MongoDatabase database = mongoServer.GetDatabase(BlockFilesQueryManager.DefaultDatabase);
                                 MongoCollection mongoCollection = database.GetCollection<BsonDocument>(tableName);
 
@@ -1093,14 +1093,14 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 
                             if (mongoServer != null)
                             {
-                                string tableName =  state + "_tabblock10 ";
+                                string tableName = state + "_tabblock10 ";
                                 MongoDatabase database = mongoServer.GetDatabase(BlockFilesQueryManager.DefaultDatabase);
                                 MongoCollection mongoCollection = database.GetCollection<BsonDocument>(tableName);
 
                                 GeoJson2DCoordinates geoJson2DCoordinates = new GeoJson2DCoordinates(longitude, latitude);
                                 GeoJsonPoint<GeoJson2DCoordinates> point = GeoJson.Point(null, geoJson2DCoordinates);
 
-                                MongoCursor<BsonDocument> docs = mongoCollection.FindAs<BsonDocument>(Query.Near("shapeGeogAsGeoJSON", point,distanceThreshold,true)).SetSortOrder(SortBy.Ascending("dist"));
+                                MongoCursor<BsonDocument> docs = mongoCollection.FindAs<BsonDocument>(Query.Near("shapeGeogAsGeoJSON", point, distanceThreshold, true)).SetSortOrder(SortBy.Ascending("dist"));
                                 ret = new DataTable();
                                 if (docs != null && docs.Count() > 0)
                                 {
@@ -1168,4 +1168,3 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 
 }
 
-  

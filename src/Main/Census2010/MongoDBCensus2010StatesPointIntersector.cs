@@ -16,7 +16,7 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
 
         #region Properties
 
-        
+
         #endregion
 
         public MongoDBCensus2010StatesPointIntersector()
@@ -27,7 +27,7 @@ namespace TAMU.GeoInnovation.PointIntersectors.Census.MongoDB.Census2010
             : base(version, blockFilesQueryManager, stateFilesQueryManager, countryFilesQueryManager)
         { }
 
-        
+
 
         public override DataTable GetRecordAsDataTable(double longitude, double latitude, string state, string county, double version)
         {
